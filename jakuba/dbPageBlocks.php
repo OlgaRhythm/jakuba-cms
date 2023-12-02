@@ -13,6 +13,10 @@ class DBPageBlocks extends DB {
         return explode(",", $this->select("Pages", ["blocks"], ["url" => $url])[0]["blocks"]);
     }
 
+    public function getPagePropertyByUrl(string $url) {
+        return $this->select("Pages", ["*"], ["url" => $url])[0];
+    }
+
     public function getPageBlocksByUrl(string $url) {
         $blocksId = explode(",", $this->select("Pages", ["blocks"], ["url" => $url])[0]["blocks"]);
 
@@ -22,6 +26,18 @@ class DBPageBlocks extends DB {
         $pdo = $this->getPDO();
         $stmt = $pdo->prepare($sql);
         $stmt->execute($blocksId);  
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    
+    public function getPageBlocksByIds(array $arrayIds) {
+        $placeholders = str_repeat('?,', count($arrayIds) - 1) . '?';
+
+        $sql = "SELECT b.id, b.content, tob.path, tob.id AS type_id, tob.type AS type_name FROM TypesOfBlocks tob JOIN Blocks b ON b.type = tob.id WHERE b.id IN ($placeholders)";    
+        $pdo = $this->getPDO();
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($arrayIds);  
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
