@@ -26,4 +26,15 @@ class DBEdit extends DB {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function checkUnicUrlPage (string $url) {
+        $condition = ["url" => $url];
+        if (count($this->select("Pages", ["id"], $condition)) >= 1) return false;
+        return true;
+    }
+
+    public function createPage($title, $url) {
+        $pageProperties = ["title" => $title, "url" => $url];
+        return $this->insert("Pages", $pageProperties);
+    }
+
 }

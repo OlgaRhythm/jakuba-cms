@@ -105,7 +105,7 @@ class DB {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    private function getConditionWhere(array $conditions=[], string $conditionString="") {
+    public function getConditionWhere(array $conditions=[], string $conditionString="") {
         foreach ($conditions as $key => $value) {
             $setConditions[] = "$key = \"$value\"";
         }

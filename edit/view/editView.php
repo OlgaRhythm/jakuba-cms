@@ -13,9 +13,18 @@ class editView {
             $echo .= '<td><a href="' . $page["url"] . '" target="_blank">' . $page["title"] . '</a></td>';
             $echo .= '<td><a href="' . $page["url"] . '" target="_blank">' . $page["url"] . '</a></td>';
             $echo .= '<td>' . count(explode(",", $page["blocks"])) . '</td>';
-            $echo .= '<td><a href="/edit/view/editpage.php?id=' . $page["id"] . '">Редактировать</a></td>';
+            $echo .= '<td><a href="/edit/editPage.php?id=' . $page["id"] . '">Редактировать</a></td>';
             $echo .= '</tr>' . "\n";
         }
         return $echo;
+    }
+
+    public function prepare_url($url) { // человекопонятный url
+        $arr_url = array_filter(explode("/", $url), 'strlen');
+        $url = implode("/", $arr_url);
+        if ($url) {
+            return "/" . $url . "/";
+        }
+        return "/";
     }
 }
