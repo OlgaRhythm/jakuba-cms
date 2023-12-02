@@ -106,6 +106,10 @@ class DB {
     }
 
     public function getConditionWhere(array $conditions=[], string $conditionString="") {
+        if (count($conditions) < 1 && $conditionString=="") {
+            return "";
+        }
+        $setConditions = [];
         foreach ($conditions as $key => $value) {
             $setConditions[] = "$key = \"$value\"";
         }

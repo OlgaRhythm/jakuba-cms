@@ -27,4 +27,13 @@ class editView {
         }
         return "/";
     }
+    
+    public function getAllBlockTypes(array $pageBlocksInfo){
+        $echo = '<option>-----</option>' . "\n";
+        foreach ($pageBlocksInfo as $block) {
+            $echo .= '<option value="' . $block["id"] . '">' . $block["type"] . '</option>' . "\n";
+        }
+        return $echo;
+    }
+
 }

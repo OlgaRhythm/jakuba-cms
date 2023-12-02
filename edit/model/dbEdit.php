@@ -19,11 +19,7 @@ class DBEdit extends DB {
     }
 
     public function getAllPages() {
-        $sql = "SELECT * FROM Pages";    
-        $pdo = $this->getPDO();
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();  
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $this->select("Pages", ["*"]);
     }
 
     public function checkUnicUrlPage (string $url) {
@@ -35,6 +31,10 @@ class DBEdit extends DB {
     public function createPage($title, $url) {
         $pageProperties = ["title" => $title, "url" => $url];
         return $this->insert("Pages", $pageProperties);
+    }
+
+    public function getAllBlockTypes() {
+        return $this->select("TypesOfBlocks", ["*"]);
     }
 
 }

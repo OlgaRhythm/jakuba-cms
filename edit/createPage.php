@@ -13,7 +13,6 @@ $pageEdit = new editView();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Проверка введенных данных
-
     if (isset($_POST["title"]) && isset($_POST["url"])) {
         $url = $pageEdit->prepare_url($_POST["url"]);
         if ($dbPages->checkUnicUrlPage($url)) {
