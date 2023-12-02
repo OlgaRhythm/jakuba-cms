@@ -9,6 +9,10 @@ function start() {
     $pageDB = new DBPageBlocks(DB_NAME, DB_USER, DB_PASSWORD, DB_HOST);
     $url = prepare_url($_SERVER['REQUEST_URI']);
     $arrPageProperties = $pageDB->getPagePropertyByUrl($url);
+    if (!isset($arrPageProperties["id"])){
+        include $_SERVER['DOCUMENT_ROOT'] . "/" . "404.php";
+        die();
+    }
     $arrPageBlocksIds = $pageDB->getPageBlocksByIds(explode(",", $arrPageProperties["blocks"]));
 
     $page = new pageView($arrPageProperties, $arrPageBlocksIds);
