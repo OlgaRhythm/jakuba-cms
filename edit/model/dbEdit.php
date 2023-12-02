@@ -9,5 +9,21 @@ class DBEdit extends DB {
             return true;
         }
     }
+    
+    public function getCountPages() {
+        $sql = "SELECT COUNT(*) AS count_pages FROM Pages"; 
+        $pdo = $this->getPDO();
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();  
+        return $stmt->fetchColumn();
+    }
+
+    public function getAllPages() {
+        $sql = "SELECT * FROM Pages";    
+        $pdo = $this->getPDO();
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();  
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }
