@@ -7,16 +7,11 @@
 
 function start() {
     $pageDB = new DBPageBlocks(DB_NAME, DB_USER, DB_PASSWORD, DB_HOST);
-
     $url = prepare_url($_SERVER['REQUEST_URI']);
-    
     $arrPageProperties = $pageDB->getPagePropertyByUrl($url);
-    
     $arrPageBlocksIds = $pageDB->getPageBlocksByIds(explode(",", $arrPageProperties["blocks"]));
 
     $page = new pageView($arrPageProperties, $arrPageBlocksIds);
-
-    //print_r($page->getTitle());
 
     include $_SERVER['DOCUMENT_ROOT'] . "/" . DIR_TEMPLATES . "/" . DIR_MAINTEMPLATE . "/" . "index.php";
 }

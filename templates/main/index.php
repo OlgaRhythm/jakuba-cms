@@ -2,8 +2,16 @@
 // main template
 // View
 
+/** Use object $page. */
+
 include "header.php";
+?>
 
-echo $page->getTitle();
+<pre>
+    <?//print_r($page);?>
+</pre>
 
+<?$page->getPageBlocks();?>
+
+<?php
 include "footer.php";
