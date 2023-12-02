@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Соединение с базой данной и работа с запросами
+ */
 class DB {
     private $dbName;
     private $dbUser;
@@ -26,6 +28,11 @@ class DB {
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+    /**
+     * Добавление записи в базу данных.
+     * Принимает имя таблицы и параметры, которые представляют собой массив, 
+     * где ключ - название столбца, а значение по ключу - содержимое поля.
+     */
     public function insert( string $tableName, array $params) {
         $columns = implode(', ', array_keys($params));
         $values = implode(', ', array_fill(0, count($params), '?'));
@@ -36,6 +43,12 @@ class DB {
         return $this->pdo->lastInsertId();
     }
 
+     /**
+     * Обновление записи в базе данных.
+     * Принимает имя таблицы, параметры (массив, где ключ - название столбца, значение - содержимое), 
+     * условия (массив, где ключ - название столбца, значение - содержимое, объединяются с помощью AND) и
+     * условия в виде строки (составленного по правилам SQL).
+     */
     public function update(string $tableName, array $params, array $conditions, string $conditionString="") {
         $setKeys = [];
         foreach ($params as $key => $value) {
@@ -50,6 +63,12 @@ class DB {
         return $stmt->rowCount();
     }
 
+    /**
+     * Удаление записи в базе данных.
+     * Принимает имя таблицы,
+     * условия (массив, где ключ - название столбца, значение - содержимое, объединяются с помощью AND) и
+     * условия в виде строки (составленного по правилам SQL).
+     */
     public function delete(string $tableName, array $conditions = [], string $conditionString="") {
         $sql = "DELETE FROM " . $tableName . $this->getConditionWhere($conditions, $conditionString);
         $stmt = $this->pdo->prepare($sql);
@@ -57,6 +76,13 @@ class DB {
         return $stmt->rowCount();
     }
 
+     /**
+     * Вывод записей из базы данных.
+     * Принимает имя таблицы,
+     * название столбцов,
+     * условия (массив, где ключ - название столбца, значение - содержимое, объединяются с помощью AND) и
+     * условия в виде строки (составленного по правилам SQL).
+     */
     public function select(string $tableName, array $columns, array $conditions=[], string $conditionString="") {
         $columnsString = implode(', ', $columns);
        
@@ -68,6 +94,11 @@ class DB {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Вывод записей из базы данных.
+     * Позволяет получать содержимое базы данных с помощью запроса, написанного по правилам SQL, 
+     * и параметров.
+     */
     public function sqlExecute(string $sql, array $params=[]) {
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);

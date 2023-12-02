@@ -1,4 +1,7 @@
 <?php 
+/**
+ * Загрузка файлов из заданной директории.
+ */
 function getAllPhpFiles($dir) {
     $files = [];
     $items = scandir($dir);
@@ -18,12 +21,9 @@ function getAllPhpFiles($dir) {
     return $files;
 }
 
-// Пример использования функции
 $directory = $_SERVER['DOCUMENT_ROOT'] . "/" . DIR_CORE;
 $phpFiles = getAllPhpFiles($directory);
 
-// Вывод результатов
 foreach ($phpFiles as $file) {
-    //echo $file . "\n";
     require_once($file);
 }
