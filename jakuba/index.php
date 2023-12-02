@@ -1,7 +1,6 @@
 <?php 
 
-require_once( $_SERVER['DOCUMENT_ROOT'] . "/config.php");
-require_once( $_SERVER['DOCUMENT_ROOT'] . "/" . DIR_CORE . "/dbPageBlocks.php");
+//require_once( $_SERVER['DOCUMENT_ROOT'] . "/config.php");
 
 
 $page = new DBPageBlocks(DB_NAME, DB_USER, DB_PASSWORD, DB_HOST);
@@ -21,4 +20,3 @@ function prepare_url($url) { // человекопонятный url
     }
     return "/";
 }
-
