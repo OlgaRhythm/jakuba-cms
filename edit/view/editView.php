@@ -1,5 +1,9 @@
 <?php
+///edit/view
 
+/**
+ * Класс для вывода блоков на страницах управления сайтом
+ */
 class editView {
     // `id`, `title`, `url`, `blocks`
 

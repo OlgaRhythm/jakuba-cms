@@ -1,5 +1,5 @@
 <?php
-// admin (edit)
+// admin (/edit)
 require_once($_SERVER['DOCUMENT_ROOT'] . "/" ."config.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/" . DIR_ADMIN . "/auth.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/" . DIR_ADMIN . "/load.php");

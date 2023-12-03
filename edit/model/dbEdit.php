@@ -37,4 +37,31 @@ class DBEdit extends DB {
         return $this->select("TypesOfBlocks", ["*"]);
     }
 
+    public function updateContentBlockById($id, string $content){
+        return $this->update("Blocks", ["content" => $content], ["id" => $id]);
+    }
+    public function updatePageTitleUrlById($id, $title, $url){
+        return $this->update("Pages", ["url" => $url, "title" => $title], ["id" => $id]);
+    }
+
+    public function updatePageBlocksById($id, $blocks){
+        return $this->update("Pages", ["blocks" => $blocks], ["id" => $id]);
+    }
+
+    public function getPageUrlById($id) {
+        return $this->select("Pages", ["url"], ["id" => $id])[0]["url"];
+    }
+
+    public function getPageBlocksIdByPageId($id) {
+        $arrBlocks = $this->select("Pages", ["blocks"], ["id" => $id])[0]["blocks"];
+        if ($arrBlocks) {
+            return explode(",",  $arrBlocks);
+        } 
+        return [];
+    }
+
+    public function createNewBlock($type){
+        return $this->insert("Blocks", ["type" => $type]);
+    }
+
 }

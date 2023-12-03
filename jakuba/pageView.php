@@ -1,4 +1,5 @@
 <?php
+// root/jakuba
 /** Агрегация данных и передача в виде объекта */
 class pageView {
     public $pageTitle;

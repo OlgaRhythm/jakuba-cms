@@ -50,6 +50,9 @@ class DB {
      * условия в виде строки (составленного по правилам SQL).
      */
     public function update(string $tableName, array $params, array $conditions, string $conditionString="") {
+        if (count($conditions) < 1 && $conditionString=="") {
+            return "";
+        }
         $setKeys = [];
         foreach ($params as $key => $value) {
             $setKeys[] = "$key = ?";
@@ -57,9 +60,11 @@ class DB {
         $setKeys = implode(', ', $setKeys);
 
         $sql = "UPDATE $tableName SET $setKeys" . $this->getConditionWhere($conditions, $conditionString);
-
+     
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($params);
+
+        $stmt->execute(array_values($params));
+        
         return $stmt->rowCount();
     }
 
@@ -111,11 +116,15 @@ class DB {
         }
         $setConditions = [];
         foreach ($conditions as $key => $value) {
-            $setConditions[] = "$key = \"$value\"";
+            if (is_int($value)) {
+                $setConditions[] = "$key = $value";
+            } else {
+                $setConditions[] = "$key = \"$value\"";
+            }
         }
         $conditionsWhere = implode(' AND ', $setConditions);
 
-        if ($conditionString) $conditionsWhere .= " " . $conditionString;
+        if ($conditionString != "") $conditionsWhere .= " " . $conditionString;
 
         if ($conditionsWhere == " ") {
            return "";
