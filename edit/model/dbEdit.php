@@ -64,4 +64,8 @@ class DBEdit extends DB {
         return $this->insert("Blocks", ["type" => $type]);
     }
 
+    public function deleteBlockById($id) {
+        return $this->delete("Blocks", ["id" => $id]);
+    }
+
 }

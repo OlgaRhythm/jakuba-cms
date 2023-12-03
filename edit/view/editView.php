@@ -33,7 +33,7 @@ class editView {
     }
     
     public function getAllBlockTypes(array $pageBlocksInfo){
-        $echo = '<option>-----</option>' . "\n";
+        $echo = '<option value="0">-----</option>' . "\n";
         foreach ($pageBlocksInfo as $block) {
             $echo .= '<option value="' . $block["id"] . '">' . $block["type"] . '</option>' . "\n";
         }
