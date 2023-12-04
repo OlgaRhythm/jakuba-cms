@@ -47,10 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $url = $editView->prepare_url($_POST["url"]);
             if ($dbPages->getPageUrlById($pageId) == $_POST["url"] || $dbPages->checkUnicUrlPage($url)) {
                 $dbPages->updatePageTitleUrlById($pageId, $_POST["title"], $url);
-                /*
-                if (!$id) {
-                    $error = "Не удалось сохранить данные о странице!";
-                }*/
             } else {
                 $error = "Страница с таким url уже существует!";
             }
@@ -58,31 +54,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $error = "Обязательные поля не заполнены!";
         }
     }
-
-    // Проверка введенных данных
-    /*
-    if (isset($_POST["title"]) && isset($_POST["url"])) {
-        $url = $pageEdit->prepare_url($_POST["url"]);
-        if ($dbPages->checkUnicUrlPage($url)) {
-            $id = $dbPages->createPage($_POST["title"], $url);
-            if ($id) {
-                header("location: /edit/editPage.php?id=" . $id); // Перенаправление на защищенную страницу
-                exit;
-                
-            } else {
-                $error = "Не удалось создать новую страницу!";
-            }
-
-        } else {
-            $error = "Страница с таким url уже существует!";
-        }
-    } else {
-        $error = "Обязательные поля не заполнены!";
-    }
-    */
 }
 
-include $_SERVER['DOCUMENT_ROOT'] . "/" . DIR_ADMIN . "/template/header.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/" . DIR_ADMIN . "/" . DIR_ADMIN_TEMPLATE . "/"  . "header.php";
 require_once($_SERVER['DOCUMENT_ROOT'] . "/" . DIR_CORE . "/" . "dbPageBlocks.php");
 $dbPageBlocks = new DBPageBlocks(DB_NAME, DB_USER, DB_PASSWORD, DB_HOST);
 
@@ -126,4 +100,4 @@ $blockTypesList = $editView->getAllBlockTypes($arrAllBlocks);
 
 
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . "/" . DIR_ADMIN . "/template/footer.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/" . DIR_ADMIN . "/" . DIR_ADMIN_TEMPLATE . "/"  . "footer.php";

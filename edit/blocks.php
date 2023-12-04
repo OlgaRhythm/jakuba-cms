@@ -3,7 +3,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . "/" ."config.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/" . DIR_ADMIN . "/auth.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/" . DIR_ADMIN . "/load.php");
-$title = "Главная Admin";
+$title = "Типы блоков";
 include $_SERVER['DOCUMENT_ROOT'] . "/" . DIR_ADMIN . "/" . DIR_ADMIN_TEMPLATE  . "/header.php";
 require_once($_SERVER['DOCUMENT_ROOT'] . "/" . DIR_CORE . "/" . "db.php");
 
@@ -12,14 +12,14 @@ $dbPages = new DBEdit(DB_NAME, DB_USER, DB_PASSWORD, DB_HOST);
 $table = new editView();
 ?>
 
-<h1>Страницы</h1>
+<h1>Типы блоков</h1>
 <table>
-<?=$table->showPages($dbPages->getAllPages());?>
+<?=$table->showBlocks($dbPages->getAllBlocks());?>
 </table>
 
 <p>
-    <a href="/edit/createPage.php" title="Создать новую страницу">
-        Создать новую страницу
+    <a href="/edit/createBlock.php" title="Создать новый блок">
+        Создать новый блок
     </a>
 </p>
 
