@@ -231,12 +231,12 @@ div.content table tr th {
     border-left: #fff 2px solid;
 }
 
-div.content table tr td a{
+div.content table tr td a {
     text-decoration: none;
     color: #646663;
 }
 
-div.content table tr td a:hover{
+div.content table tr td a:hover {
     text-decoration: underline;
 }
 
@@ -254,7 +254,7 @@ td a.pic_button {
     padding: 3px;
 }
 
-a.create_button{
+a.create_button {
     border: none;
     height: 50px;
     width: 200px;
@@ -276,3 +276,33 @@ a.create_button:hover {
 input.copy_input {
     padding: 5px 10px;
 }
+
+.login_screen_wrapper {
+    width: 100%;
+    height: 300px;
+    display: block;
+    position: fixed;
+    top: 50%;
+    text-align: center;
+}
+
+form.login_screen {
+    display: inline-block;
+    height: 300px;
+    width: 400px;
+    padding: 20px 30px;
+    border: #cdcfcc 1px solid;
+    text-align: center;
+    margin: -200px 0 0 0;
+}
+
+form.login_screen h2 {
+    color: #646663;
+}
+
+form.login_screen input {
+    font-size: 16px;
+    padding: 5px 10px;
+}
+
+body.login_page {}
