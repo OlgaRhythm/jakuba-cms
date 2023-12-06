@@ -18,7 +18,7 @@ $table = new editView();
 </table>
 
 <p>
-    <a href="/edit/createBlock.php" title="Создать новый блок">
+    <a class="create_button" href="/edit/createBlock.php" title="Создать новый блок">
         Создать новый блок
     </a>
 </p>

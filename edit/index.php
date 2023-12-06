@@ -18,7 +18,7 @@ $table = new editView();
 </table>
 
 <p>
-    <a href="/edit/createPage.php" title="Создать новую страницу">
+    <a class="create_button" href="/edit/createPage.php" title="Создать новую страницу">
         Создать новую страницу
     </a>
 </p>

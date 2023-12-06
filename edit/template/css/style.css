@@ -14,6 +14,18 @@ body {
     min-height: 100%;
 }
 
+.align-right {
+    text-align: right;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.align-center {
+    text-align: center;
+}
+
 menu {
     display: block;
     height: 40px;
@@ -103,18 +115,6 @@ div.block_item_controll {
 
 }
 
-div.block_item_controll a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 20px;
-    text-align: center;
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    vertical-align: middle;
-    background: #A7948E;
-    padding: 3px;
-}
 
 div.block_item_controll a:hover {
     background: #cec2be;
@@ -207,4 +207,72 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background: #F0D2AE;
+}
+
+div.content table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 1000px;
+}
+
+div.content table tr {
+    background: #f2efef;
+    margin: 0;
+}
+
+
+div.content table tr:nth-child(even) {
+    background: #fbf9f9;
+}
+
+div.content table tr td,
+div.content table tr th {
+    padding: 5px 10px;
+    border-left: #fff 2px solid;
+}
+
+div.content table tr td a{
+    text-decoration: none;
+    color: #646663;
+}
+
+div.content table tr td a:hover{
+    text-decoration: underline;
+}
+
+div.block_item_controll a,
+td a.pic_button {
+    text-decoration: none;
+    color: #fff !important;
+    font-size: 20px;
+    text-align: center;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    background: #A7948E;
+    padding: 3px;
+}
+
+a.create_button{
+    border: none;
+    height: 50px;
+    width: 200px;
+    padding: 10px 20px;
+    line-height: 40px;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+    background: #DEB192;
+    color: #fff;
+    vertical-align: middle;
+    text-decoration: none;
+}
+
+a.create_button:hover {
+    background: #F0D2AE;
+}
+
+input.copy_input {
+    padding: 5px 10px;
 }

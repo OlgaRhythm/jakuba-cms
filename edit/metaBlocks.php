@@ -18,7 +18,7 @@ $editView = new editView();
 </table>
 
 <p>
-    <a href="/edit/createMetaBlock.php" title="Создать новый мета блок">
+    <a class="create_button" href="/edit/createMetaBlock.php" title="Создать новый мета блок">
         Создать новый мета блок
     </a>
 </p>
