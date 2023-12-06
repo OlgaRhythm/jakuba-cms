@@ -11,7 +11,7 @@ class editView
     public function showPages(array $arrayPages)
     {
         $echo = '<tr>
-                    <th>ID</th><th>Название</th><th>Ссылка</th><th>Количество блоков</th><th>Редактировать</th>
+                    <th>ID</th><th>Название</th><th>Ссылка</th><th>Количество блоков</th><th>Редактировать</th><th>Удалить</th>
                 </tr>' . "\n";
         foreach ($arrayPages as $page) {
             $echo .= '<tr>';
@@ -20,6 +20,7 @@ class editView
             $echo .= '<td><a href="' . $page["url"] . '" target="_blank">' . $page["url"] . '</a></td>';
             $echo .= '<td>' . count(array_filter(explode(",", $page["blocks"]))) . '</td>';
             $echo .= '<td><a href="/edit/editPage.php?id=' . $page["id"] . '">Редактировать</a></td>';
+            $echo .= '<td><a class="deletePage" href="/edit/deletePage.php?id=' . $page["id"] . '">Удалить</a></td>';
             $echo .= '</tr>' . "\n";
         }
         return $echo;

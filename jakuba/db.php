@@ -79,7 +79,7 @@ class DB {
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->rowCount();
-    }
+    } 
 
      /**
      * Вывод записей из базы данных.

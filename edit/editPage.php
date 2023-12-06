@@ -57,11 +57,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 include $_SERVER['DOCUMENT_ROOT'] . "/" . DIR_ADMIN . "/" . DIR_ADMIN_TEMPLATE . "/"  . "header.php";
-require_once($_SERVER['DOCUMENT_ROOT'] . "/" . DIR_CORE . "/" . "dbPageBlocks.php");
-$dbPageBlocks = new DBPageBlocks(DB_NAME, DB_USER, DB_PASSWORD, DB_HOST);
 
-$arrBlocks = $dbPageBlocks->getPageBlocksByIds($arrPageBlockIds);
-$pageProperties = $dbPageBlocks->getPagePropertyByPageId($pageId);
+$arrBlocks = $dbPages->getPageBlocksByIds($arrPageBlockIds);
+$pageProperties = $dbPages->getPagePropertyByPageId($pageId);
 
 $arrAllBlocks = $dbPages->getAllBlockTypes();
 

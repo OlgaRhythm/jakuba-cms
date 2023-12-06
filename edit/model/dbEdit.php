@@ -129,7 +129,34 @@ class DBEdit extends DB
         return $this->delete("TypesOfBlocks", ["id" => $typeBlockId]);
     }
 
+    public function deletePageById($pageId)
+    {
+        $arrBlocks = $this->getPageBlocksIdByPageId($pageId);
+        foreach($arrBlocks as $blockId) {
+            $this->deleteBlockById($blockId);
+        }
+        return $this->delete("Pages", ["id" => $pageId]);
+    }
+
     public function getTypeOfBlocksById($typeBlockId) {
         return $this->select("TypesOfBlocks", ["type"], ["id" => $typeBlockId])[0]["type"];
+    }
+
+    public function getPageBlocksByIds(array $arrayIds) {
+        if (count($arrayIds) < 1) {
+            return [];
+        } 
+        $placeholders = str_repeat('?,', count($arrayIds) - 1) . '?';
+
+        $sql = "SELECT b.id, b.content, tob.path, tob.id AS type_id, tob.type AS type_name FROM TypesOfBlocks tob JOIN Blocks b ON b.type = tob.id WHERE b.id IN ($placeholders)";    
+        $pdo = $this->getPDO();
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($arrayIds);  
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getPagePropertyByPageId($id) {
+        return $this->select("Pages", ["*"], ["id" => $id])[0];
     }
 }
