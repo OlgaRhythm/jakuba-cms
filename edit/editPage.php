@@ -91,7 +91,7 @@ $blockTypesList = $editView->getAllBlockTypes($arrAllBlocks);
             <div class="block_item_controll">
                 <a title="Переместить вниз" href="/edit/moveBlock.php?pageId=<?= $pageId ?>&blockId=<?= $blockProperty["id"] ?>&direction=-1">&darr;</a>
                 <a title="Переместить вверх" href="/edit/moveBlock.php?pageId=<?= $pageId ?>&blockId=<?= $blockProperty["id"] ?>&direction=1">&uarr;</a>
-                <span class="align-right">Удалить блок <input type="checkbox" value="<?= $blockProperty["id"] ?>" name="deleteBlock[]"></span>
+                <span class="align-right">Удалить блок <input type="checkbox" class="remover" del_alert="Вы уверены, что хотите удалить этот блок?" value="<?= $blockProperty["id"] ?>" name="deleteBlock[]"></span>
             </div>
         </div>
     <?php

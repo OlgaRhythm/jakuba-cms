@@ -305,4 +305,6 @@ form.login_screen input {
     padding: 5px 10px;
 }
 
-body.login_page {}
+.tox-notifications-container {
+    display: none !important;
+}

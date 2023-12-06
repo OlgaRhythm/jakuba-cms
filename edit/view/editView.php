@@ -20,7 +20,7 @@ class editView
             $echo .= '<td><a href="' . $page["url"] . '" target="_blank">' . $page["url"] . '</a></td>';
             $echo .= '<td class="align-center">' . count(array_filter(explode(",", $page["blocks"]))) . '</td>';
             $echo .= '<td class="align-center"><a title="Редактировать" class="pic_button" href="/edit/editPage.php?id=' . $page["id"] . '">&#9998;</a></td>';
-            $echo .= '<td class="align-center"><a title="Удалить" class="pic_button" class="deletePage" href="/edit/deletePage.php?id=' . $page["id"] . '">&#128465;</a></td>';
+            $echo .= '<td class="align-center"><a title="Удалить" class="pic_button remover deletePage" del_alert="Вы уверены, что хотите удалить эту страницу?" href="/edit/deletePage.php?id=' . $page["id"] . '">&#128465;</a></td>';
             $echo .= '</tr>' . "\n";
         }
         return $echo;
@@ -39,7 +39,7 @@ class editView
             $echo .= '<td>' . "/" . DIR_MODULES . "/blocks" . "/" . $block["path"] . '/</td>';
             $echo .= '<td>' . $block["type"] . '</td>';
             $echo .= '<td class="align-center"><a title="Редактировать" class="pic_button" href="/edit/editBlock.php?id=' . $block["id"] . '">&#9998;</a></td>';
-            $echo .= '<td class="align-center"><a title="Удалить" class="pic_button" href="/edit/deleteBlock.php?id=' . $block["id"] . '">&#128465;</a></td>';
+            $echo .= '<td class="align-center"><a title="Удалить" class="pic_button remover" del_alert="Вы уверены, что хотите удалить этот тип блока?" href="/edit/deleteBlock.php?id=' . $block["id"] . '">&#128465;</a></td>';
             $echo .= '</tr>' . "\n";
         }
         return $echo;
@@ -58,7 +58,7 @@ class editView
             $echo .= '<td>' . "/" . DIR_MODULES . "/metaBlocks" . "/" . $block["path"] . '/</td>';
             $echo .= '<td><input class="copy_input" type="text" value="' . htmlspecialchars('<?=$metaBlocks->showMetaBlockById(' . $block["id"] . ')?>') . '"></td>';
             $echo .= '<td><a title="Редактировать" class="pic_button" href="/edit/editMetaBlock.php?id=' . $block["id"] . '">&#9998;</a></td>';
-            $echo .= '<td><a title="Удалить" class="pic_button" href="/edit/deleteMetaBlock.php?id=' . $block["id"] . '">&#128465;</a></td>';
+            $echo .= '<td><a title="Удалить" class="pic_button remover" del_alert="Вы уверены, что хотите удалить этот мета блок?" href="/edit/deleteMetaBlock.php?id=' . $block["id"] . '">&#128465;</a></td>';
             $echo .= '</tr>' . "\n";
         }
         return $echo;
