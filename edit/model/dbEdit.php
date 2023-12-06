@@ -31,6 +31,11 @@ class DBEdit extends DB
         return $this->select("TypesOfBlocks", ["*"]);
     }
 
+    public function getAllMetaBlocks()
+    {
+        return $this->select("MetaBlocks", ["*"]);
+    }
+
     public function checkUnicUrlPage(string $url)
     {
         $condition = ["url" => $url];
@@ -99,14 +104,30 @@ class DBEdit extends DB
         return $this->insert("TypesOfBlocks", $blockTypeProperties);
     }
 
+    public function createMetaBlock(array $blockTypeProperties)
+    {
+        return $this->insert("MetaBlocks", $blockTypeProperties);
+    }
+
     public function updateTypeOfBlock($id, array $blockProperties)
     {
         return $this->update("TypesOfBlocks", $blockProperties, ["id" => $id]);
     }
 
+    public function updateMetaBlock($id, array $blockProperties)
+    {
+        return $this->update("MetaBlocks", $blockProperties, ["id" => $id]);
+    }
+
     public function getTypeOfBlockPropertiesById($id)
     {
         return $this->select("TypesOfBlocks", ["*"], ["id" => $id])[0];
+    }
+
+    
+    public function getMetaBlockPropertiesById($id)
+    {
+        return $this->select("MetaBlocks", ["*"], ["id" => $id])[0];
     }
 
     public function deleteTypeOfBlockById($typeBlockId)
@@ -127,6 +148,11 @@ class DBEdit extends DB
             $this->delete("Blocks", ["id" => $block["id"]]);
         }
         return $this->delete("TypesOfBlocks", ["id" => $typeBlockId]);
+    }
+
+    public function deleteMetaBlockById($metaBlockId)
+    {
+        return $this->delete("MetaBlocks", ["id" => $metaBlockId]);
     }
 
     public function deletePageById($pageId)

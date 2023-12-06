@@ -1,3 +1,4 @@
+<?//menu для админки?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>

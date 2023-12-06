@@ -14,9 +14,10 @@ function start() {
     }
     $arrPageBlocksIds = $pageDB->getPageBlocksByIds(explode(",", $arrPageProperties["blocks"]));
 
-    $page = new pageView($arrPageProperties, $arrPageBlocksIds);
+    $page = new pageView($arrPageProperties, $arrPageBlocksIds, $allMetaBlocks);
+    $metaBlocks = new pageMetaBlocksView($pageDB);
 
-    include $_SERVER['DOCUMENT_ROOT'] . "/" . DIR_TEMPLATES . "/" . DIR_MAINTEMPLATE . "/" . "index.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/" . DIR_TEMPLATES . "/" . DIR_MAINTEMPLATE . "/" . "index.php"; // template main: index.php: header.php + getPageBlocks() + footer.php 
 }
 
 function prepare_url($url) { // человекопонятный url

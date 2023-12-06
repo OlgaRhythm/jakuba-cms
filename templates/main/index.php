@@ -7,10 +7,6 @@
 include "header.php";
 ?>
 
-<pre>
-    <?//print_r($page);?>
-</pre>
-
 <?$page->getPageBlocks();?>
 
 <?php

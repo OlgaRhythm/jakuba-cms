@@ -67,4 +67,9 @@ class DBPageBlocks extends DB {
         return $arrBlocksInOrder;
     }
 
+    public function getMetaBlockPropertiesById($id)
+    {
+        return $this->select("MetaBlocks", ["*"], ["id" => $id])[0];
+    }
+
 }

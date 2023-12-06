@@ -47,24 +47,13 @@ $blockTypeProperties = $dbPages->getTypeOfBlockPropertiesById($blockTypeId);
     <input type="text" id="type" name="type" value="<?= $blockTypeProperties['type'] ?>"><br>
     <label for="path">Папка с шаблоном типа блока</label>
     <input type="text" id="path" name="path" value="<?= $blockTypeProperties['path'] ?>"><br><br>
-
+    <input type="submit" value="Сохранить">
     <?php if (isset($error)) {
         echo $error;
     }?>
     <br>
-    <input type="submit" value="Сохранить">
+    
 </form>
-<form method="post" action="">
-    <p>
-        Добавить блок
-        <select name="newBlock">
-            <?= $blockTypesList ?>
-        </select>
-        <input type="hidden" name="createNewBlock" value="createNewBlock">
-        <button>+</button>
-    </p>
-</form>
-
 
 
 <?php

@@ -45,6 +45,25 @@ class editView
         return $echo;
     }
 
+    public function showMetaBlocks(array $arrayMetaBlocks)
+    {
+        $echo = '<tr>
+                    <th>ID</th><th>Название</th><th>Описание</th><th>Путь</th><th>Код вставки</th><th>Редактировать</th><th>Удалить</th>
+                </tr>' . "\n";
+        foreach ($arrayMetaBlocks as $block) {
+            $echo .= '<tr>';
+            $echo .= '<td>' . $block["id"] . '</td>';
+            $echo .= '<td>' . $block["name"] . '</td>';
+            $echo .= '<td>' . $block["description"] . '</td>';
+            $echo .= '<td>' . "/" . DIR_MODULES . "/metaBlocks" . "/" . $block["path"] . '/</td>';
+            $echo .= '<td><input type="text" value="'. htmlspecialchars('<?=$metaBlocks->showMetaBlockById(' . $block["id"] . ')?>') .'"></td>';
+            $echo .= '<td><a href="/edit/editMetaBlock.php?id=' . $block["id"] . '">Редактировать</a></td>';
+            $echo .= '<td><a href="/edit/deleteMetaBlock.php?id=' . $block["id"] . '">Удалить</a></td>';
+            $echo .= '</tr>' . "\n";
+        }
+        return $echo;
+    }
+
     public function prepare_url($url)
     { // человекопонятный url
         $arr_url = array_filter(explode("/", $url), 'strlen');
