@@ -27,15 +27,24 @@ include $_SERVER['DOCUMENT_ROOT'] . "/" . DIR_ADMIN . "/" . DIR_ADMIN_TEMPLATE .
 
 <h1>Создание мета блока</h1>
 <form method="post" action="">
-    <label for="name">Название мета блока</label>
-    <input type="text" id="name" name="name" value=""><br>
-    <label for="description">Описание мета блока</label>
-    <input type="text" id="description" name="description" value=""><br>
-    <label for="path">Папка с шаблоном типа блока</label>
-    <input type="text" id="path" name="path" value=""><br><br>
-    <label for="description">Содержимое мета блока</label>
-    <input type="text" id="content" name="content" value=""><br>
+    <p class="page_fields">
+        <label for="name">Название мета блока</label>
+        <input type="text" id="name" name="name" value="">
+    </p>
+    <p class="page_fields">
+        <label for="description">Описание мета блока</label>
+        <textarea id="description" name="description"></textarea>
+    </p>
+    <p class="page_fields">
+        <label for="path">Папка с шаблоном типа блока</label>
+        <input type="text" id="path" name="path" value="">
+    </p>
+    <p class="page_fields">
+        <label for="content">Содержимое мета блока</label>
+        <textarea id="content" name="content"></textarea>
+    </p>
     <input type="submit" value="Создать">
+
 
 </form>
 <?php if (isset($error)) {

@@ -31,21 +31,29 @@ $metaBlockProperties = $dbPages->getMetaBlockPropertiesById($metaBlockId);
 
 <h1>Редактировать мета блок id = <?= $metaBlockProperties["id"] ?></h1>
 <form method="post" action="">
-    <label for="name">Название мета блока</label>
-    <input type="text" id="name" name="name" value="<?=$metaBlockProperties["name"]?>"><br>
-    <label for="description">Описание мета блока</label>
-    <input type="text" id="description" name="description" value="<?=$metaBlockProperties["description"]?>"><br>
-    <label for="path">Папка с шаблоном типа блока</label>
-    <input type="text" id="path" name="path" value="<?=$metaBlockProperties["path"]?>"><br>
-    <label for="description">Содержимое мета блока</label>
-    <input type="text" id="content" name="content" value="<?=$metaBlockProperties["content"]?>"><br><br>
+    <p class="page_fields">
+        <label for="name">Название мета блока</label>
+        <input type="text" id="name" name="name" value="<?= $metaBlockProperties["name"] ?>">
+    </p>
+    <p class="page_fields">
+        <label for="description">Описание мета блока</label>
+        <textarea id="description" name="description"><?= $metaBlockProperties["description"] ?></textarea>
+    </p>
+    <p class="page_fields">
+        <label for="path">Папка с шаблоном типа блока</label>
+        <input type="text" id="path" name="path" value="<?= $metaBlockProperties["path"] ?>">
+    </p>
+    <p class="page_fields">
+        <label for="content">Содержимое мета блока</label>
+        <textarea id="content" name="content"><?= $metaBlockProperties["content"] ?></textarea>
+    </p>
     <input type="submit" value="Сохранить">
 
     <?php if (isset($error)) {
         echo $error;
     } ?>
     <br>
-    
+
 </form>
 
 

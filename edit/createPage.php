@@ -1,6 +1,6 @@
 <?php
 // admin (edit) Создание новой страницы
-require_once($_SERVER['DOCUMENT_ROOT'] . "/" ."config.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/" . "config.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/" . DIR_ADMIN . "/auth.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/" . DIR_ADMIN . "/load.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/" . DIR_CORE . "/" . "db.php");
@@ -20,11 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($id) {
                 header("location: /edit/editPage.php?id=" . $id); // Перенаправление на защищенную страницу
                 exit;
-                
             } else {
                 $error = "Не удалось создать новую страницу!";
             }
-
         } else {
             $error = "Страница с таким url уже существует!";
         }
@@ -39,13 +37,19 @@ include $_SERVER['DOCUMENT_ROOT'] . "/" . DIR_ADMIN . "/" . DIR_ADMIN_TEMPLATE .
 
 <h1>Создать страницу</h1>
 <form method="post" action="">
+    <p class="page_fields">
         <label for="title">Название страницы</label>
         <input type="text" id="title" name="title"><br>
+    </p>
+    <p class="page_fields">
         <label for="url">Человекопонятный url</label>
         <input type="text" id="url" name="url"><br><br>
-        <input type="submit" value="Создать">
+    </p>
+    <input type="submit" value="Создать">
 </form>
-<?php if(isset($error)) { echo $error; } ?>
+<?php if (isset($error)) {
+    echo $error;
+} ?>
 
 <?php
 include $_SERVER['DOCUMENT_ROOT'] . "/" . DIR_ADMIN . "/" . DIR_ADMIN_TEMPLATE . "/"  . "footer.php";

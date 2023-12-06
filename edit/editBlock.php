@@ -22,7 +22,7 @@ $blockTypeProperties = $dbPages->getTypeOfBlockPropertiesById($blockTypeId);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["name"]) && isset($_POST["type"]) && isset($_POST["path"])) {
         if ($blockTypeProperties["type"] == $_POST["type"] || $dbPages->checkUnicTypeBlock($_POST["type"])) {
-           $dbPages->updateTypeOfBlock($blockTypeProperties["id"], ["name" => $_POST["name"], "description" => $_POST["description"], "type" => $_POST["type"], "path" => $editView->prepare_folder($_POST["path"])]);
+            $dbPages->updateTypeOfBlock($blockTypeProperties["id"], ["name" => $_POST["name"], "description" => $_POST["description"], "type" => $_POST["type"], "path" => $editView->prepare_folder($_POST["path"])]);
         } else {
             $error = "Блок с таким типом уже существует!";
         }
@@ -37,22 +37,30 @@ $blockTypeProperties = $dbPages->getTypeOfBlockPropertiesById($blockTypeId);
 
 ?>
 
-<h1>Редактировать тип блока <?=$blockTypeProperties["type"]?></h1>
+<h1>Редактировать тип блока <?= $blockTypeProperties["type"] ?></h1>
 <form method="post" action="">
-    <label for="name">Название типа блока</label>
-    <input type="text" id="name" name="name" value="<?= $blockTypeProperties['name'] ?>"><br>
-    <label for="description">Описание типа блока</label>
-    <input type="text" id="description" name="description" value="<?= $blockTypeProperties['description'] ?>"><br>
-    <label for="type">Символьний идентификатор типа блока</label>
-    <input type="text" id="type" name="type" value="<?= $blockTypeProperties['type'] ?>"><br>
-    <label for="path">Папка с шаблоном типа блока</label>
-    <input type="text" id="path" name="path" value="<?= $blockTypeProperties['path'] ?>"><br><br>
+    <p class="page_fields">
+        <label for="name">Название типа блока</label>
+        <input type="text" id="name" name="name" value="<?= $blockTypeProperties['name'] ?>">
+    </p>
+    <p class="page_fields">
+        <label for="description">Описание типа блока</label>
+        <textarea id="description" name="description"><?= $blockTypeProperties['description'] ?></textarea>
+    </p>
+    <p class="page_fields">
+        <label for="type">Символьний идентификатор типа блока</label>
+        <input type="text" id="type" name="type" value="<?= $blockTypeProperties['type'] ?>"><br>
+    </p>
+    <p class="page_fields">
+        <label for="path">Папка с шаблоном типа блока</label>
+        <input type="text" id="path" name="path" value="<?= $blockTypeProperties['path'] ?>">
+    </p>
     <input type="submit" value="Сохранить">
     <?php if (isset($error)) {
         echo $error;
-    }?>
+    } ?>
     <br>
-    
+
 </form>
 
 
