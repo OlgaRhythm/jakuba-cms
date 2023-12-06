@@ -59,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 include $_SERVER['DOCUMENT_ROOT'] . "/" . DIR_ADMIN . "/" . DIR_ADMIN_TEMPLATE . "/"  . "header.php";
 
 $arrBlocks = $dbPages->getPageBlocksByIds($arrPageBlockIds);
+
 $pageProperties = $dbPages->getPagePropertyByPageId($pageId);
 
 $arrAllBlocks = $dbPages->getAllBlockTypes();
@@ -78,7 +79,13 @@ $blockTypesList = $editView->getAllBlockTypes($arrAllBlocks);
 
     foreach($arrBlocks as $blockProperty){
         include $_SERVER['DOCUMENT_ROOT'] . "/" . DIR_MODULES . "/" . "blocks" . "/" . $blockProperty['path'] . "/edit/index.php"; 
-        echo '<div>Удалить блок <input type="checkbox" value="' . $blockProperty["id"] . '" name="deleteBlock[]"></div><br>';
+        ?>
+        <div>
+            <a href="/edit/moveBlock.php?pageId=<?=$pageId?>&blockId=<?=$blockProperty["id"]?>&direction=-1">Переместить вниз</a>
+            <a href="/edit/moveBlock.php?pageId=<?=$pageId?>&blockId=<?=$blockProperty["id"]?>&direction=1">Переместить вверх</a>
+            Удалить блок <input type="checkbox" value="<?=$blockProperty["id"]?>" name="deleteBlock[]">
+        </div><br>
+        <?php
     }
 ?>
     <br>

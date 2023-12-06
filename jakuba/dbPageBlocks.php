@@ -53,8 +53,18 @@ class DBPageBlocks extends DB {
         $pdo = $this->getPDO();
         $stmt = $pdo->prepare($sql);
         $stmt->execute($arrayIds);  
-        
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $arrBlocksInOrder = [];
+
+        foreach($arrayIds as $id) {
+            foreach($res as $block) {
+                if ($block["id"] == $id) {
+                    $arrBlocksInOrder[] = $block;
+                }
+            }
+        }
+        return $arrBlocksInOrder;
     }
 
 }
