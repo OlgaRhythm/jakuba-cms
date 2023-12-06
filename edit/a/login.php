@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" type="text/css" href="/<?= DIR_ADMIN ?>/<?= DIR_ADMIN_TEMPLATE ?>/css/style.css">
 </head>
 
-<body>
+<body class="login_page">
     <div class="login_screen_wrapper">
         <form class="login_screen" method="post" action="">
             <h2>Вход в Jakuba CMS Admin</h2>
