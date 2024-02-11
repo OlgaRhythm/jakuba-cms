@@ -3,7 +3,6 @@
 /**
  * Создаёт и заполняет файл config.php
  */
-
 function create_config($name_db, $user_db, $password_db, $host_db) {
     $configFilePath = 'config.php';
 

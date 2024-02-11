@@ -17,12 +17,16 @@ class DB {
         return "Ok";
     }
 
+    /**
+     * конструктор, устанавливающий соединение с базой данных
+     *  
+     */
     public function __construct(string $name, string $user, string $password, string $host = "localhost") {
         $this->dbName = $name;
         $this->dbUser = $user;
         $this->dbPassword = $password;
         $this->dbHost = $host;
-
+    
         $dsn = "mysql:host={$this->dbHost};dbname={$this->dbName}";
         $this->pdo = new PDO($dsn, $this->dbUser, $this->dbPassword);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
