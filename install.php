@@ -1,18 +1,22 @@
 <?php
 // root (install.php)
 require_once($_SERVER['DOCUMENT_ROOT'] . "/jakuba/createConfig.php");
-//require_once($_SERVER['DOCUMENT_ROOT'] . "/jakuba/createDBTables.php");
+include $_SERVER['DOCUMENT_ROOT'] . "/" . "jakuba" . "/" . "db.php"; // подключение класса db для работы с базой данных
+require_once( $_SERVER['DOCUMENT_ROOT'] . "/" . "jakuba" . "/creatorDBTables.php");
 
-$dbErrorMsg = "Ok";
+$dbErrorMsg = "";
 if (!test_db_connection()) {
     $dbErrorMsg = "Соединение с базой данных не было установлено! Проверьте корректность данных.";
 }
+
 $adminCredentialsErrorMsg = "";
 if (!test_admin_credentials()) {
     $adminCredentialsErrorMsg = "Логин и пароль не прошли проверку.";
 }
 
-$isValudate = install_cms();
+if (!install_cms()) {
+    $dbErrorMsg = "Ошибка создания таблиц. Обратитесь к специалисту.";
+}
 
 if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/" ."config.php")) {
     header("HTTP/1.1 301 Moved Permanently");
@@ -28,14 +32,6 @@ if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/" ."config.php")) {
             <title>Установка</title>
         </head>
         <body>
-
-        <?php
-        /*
-            if ($isValudate === false) {
-                $dbErrorMsg = "Ошибка соединения с базой данных. Проверьте правильность введённых данных.";
-            }*/
-        ?>
-
             <form method="POST">
                 <h3>Настройка доступа к базе данных</h3>
                 <p><label>Адрес базы данных (хост):<br>
@@ -91,15 +87,26 @@ function install_cms() {
         else $host_db = $_POST["host_db"];
 
         if (test_db_connection() && test_admin_credentials()) {
+            // создание таблиц в базе данных
+            try {
+            
+                $db = new CreatorDBTables($_POST["name_db"], $_POST["user_db"], $password_db, $host_db);
+                $db->createTables($_POST["login"], $_POST["password"]); // создание таблиц
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+                return false;
+            } 
+
             // создание конфига
-            create_config($_POST["name_db"], $_POST["user_db"], $password_db, $host_db);
+            create_config($_POST["name_db"], $_POST["user_db"], $password_db, $host_db); 
+
             // переадресация
             header("HTTP/1.1 301 Moved Permanently");
             header("Location: /");
             exit();
         }
     }
-    return false;
+    return true;
 }
 
 /**
@@ -119,7 +126,6 @@ function test_db_connection() {
     else $host_db = $_POST["host_db"];
 
     // тестовая установка соединение с базой данных
-    include $_SERVER['DOCUMENT_ROOT'] . "/" . "jakuba" . "/" . "db.php"; // подключение класса db для работы с базой данных
     try {
         $testDBConnection = new DB($_POST["name_db"], $_POST["user_db"], $password_db, $host_db);
         return true;       

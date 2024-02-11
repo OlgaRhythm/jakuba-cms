@@ -18,10 +18,10 @@ class DB {
     }
 
     /**
-     * конструктор, устанавливающий соединение с базой данных
+     * Конструктор, устанавливающий соединение с базой данных
      *  
      */
-    public function __construct(string $name, string $user, string $password, string $host = "localhost") {
+    public function __construct( $name,  $user, string $password, string $host = "localhost") {
         $this->dbName = $name;
         $this->dbUser = $user;
         $this->dbPassword = $password;
@@ -30,6 +30,19 @@ class DB {
         $dsn = "mysql:host={$this->dbHost};dbname={$this->dbName}";
         $this->pdo = new PDO($dsn, $this->dbUser, $this->dbPassword);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+
+    /**
+     * Создание таблицы
+     * @param string $name имя таблицы
+     * @param string $fields поля таблицы
+     */
+    public function createTable(string $name, string $fields) {
+        // необходимо экранировать аргументы через PDO
+        // во избежании sql инъекций
+        $sql = "CREATE TABLE IF NOT EXISTS " . $name . " (" . $fields . ");";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
     }
 
     /**
