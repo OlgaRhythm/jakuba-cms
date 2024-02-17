@@ -1,6 +1,9 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'] . "/" . DIR_CORE . "/db.php");
 
+/**
+ * Работа с таблицами, связанными со страницами и блоками
+ */
 class DBEdit extends DB
 {
 
@@ -12,6 +15,9 @@ class DBEdit extends DB
         }
     }
 
+    /**
+     * Подсчёт количества страниц на сайте
+     */
     public function getCountPages()
     {
         $sql = "SELECT COUNT(*) AS count_pages FROM Pages";
@@ -21,21 +27,9 @@ class DBEdit extends DB
         return $stmt->fetchColumn();
     }
 
-    public function getAllPages()
-    {
-        return $this->select("Pages", ["*"]);
-    }
-
-    public function getAllBlocks()
-    {
-        return $this->select("TypesOfBlocks", ["*"]);
-    }
-
-    public function getAllMetaBlocks()
-    {
-        return $this->select("MetaBlocks", ["*"]);
-    }
-
+    /**
+     * Проверка url на уникальность
+     */
     public function checkUnicUrlPage(string $url)
     {
         $condition = ["url" => $url];
@@ -43,6 +37,9 @@ class DBEdit extends DB
         return true;
     }
 
+    /**
+     * Проверка типа блока на уникальность
+     */
     public function checkUnicTypeBlock(string $type)
     {
         $condition = ["type" => $type];
@@ -50,36 +47,43 @@ class DBEdit extends DB
         return true;
     }
 
+    ////////////////////////////////////////////// Страницы CRUD //////////////////////////////////////////////
+
+    /**
+     * Создание страницы
+     */
     public function createPage($title, $url)
     {
         $pageProperties = ["title" => $title, "url" => $url];
         return $this->insert("Pages", $pageProperties);
     }
 
-    public function getAllBlockTypes()
+    /**
+     * Получение информации обо всех страницах
+     */
+    public function getAllPages()
     {
-        return $this->select("TypesOfBlocks", ["*"]);
+        return $this->select("Pages", ["*"]);
     }
 
-    public function updateContentBlockById($id, string $content)
-    {
-        return $this->update("Blocks", ["content" => $content], ["id" => $id]);
-    }
-    public function updatePageTitleUrlById($id, $title, $url)
-    {
-        return $this->update("Pages", ["url" => $url, "title" => $title], ["id" => $id]);
-    }
-
-    public function updatePageBlocksById($id, $blocks)
-    {
-        return $this->update("Pages", ["blocks" => $blocks], ["id" => $id]);
-    }
-
+    /**
+     * Получение url страницы по id
+     */
     public function getPageUrlById($id)
     {
         return $this->select("Pages", ["url"], ["id" => $id])[0]["url"];
     }
 
+    /**
+     * Получение информации о странице по id
+     */
+    public function getPagePropertyByPageId($id) {
+        return $this->select("Pages", ["*"], ["id" => $id])[0];
+    }
+
+    /**
+     * Получение массива блоков по id страницы
+     */
     public function getPageBlocksIdByPageId($id)
     {
         $arrBlocks = $this->select("Pages", ["blocks"], ["id" => $id])[0]["blocks"];
@@ -89,71 +93,16 @@ class DBEdit extends DB
         return [];
     }
 
-    public function createNewBlock($type)
+    public function updatePageTitleUrlById($id, $title, $url)
     {
-        return $this->insert("Blocks", ["type" => $type]);
+        return $this->update("Pages", ["url" => $url, "title" => $title], ["id" => $id]);
     }
-
-    public function deleteBlockById($id)
-    {
-        return $this->delete("Blocks", ["id" => $id]);
-    }
-
-    public function createTypeOfBlock(array $blockTypeProperties)
-    {
-        return $this->insert("TypesOfBlocks", $blockTypeProperties);
-    }
-
-    public function createMetaBlock(array $blockTypeProperties)
-    {
-        return $this->insert("MetaBlocks", $blockTypeProperties);
-    }
-
-    public function updateTypeOfBlock($id, array $blockProperties)
-    {
-        return $this->update("TypesOfBlocks", $blockProperties, ["id" => $id]);
-    }
-
-    public function updateMetaBlock($id, array $blockProperties)
-    {
-        return $this->update("MetaBlocks", $blockProperties, ["id" => $id]);
-    }
-
-    public function getTypeOfBlockPropertiesById($id)
-    {
-        return $this->select("TypesOfBlocks", ["*"], ["id" => $id])[0];
-    }
-
     
-    public function getMetaBlockPropertiesById($id)
+    public function updatePageBlocksById($id, $blocks)
     {
-        return $this->select("MetaBlocks", ["*"], ["id" => $id])[0];
+        return $this->update("Pages", ["blocks" => $blocks], ["id" => $id]);
     }
 
-    public function deleteTypeOfBlockById($typeBlockId)
-    {
-        $arrBlocks = $this->select("Blocks", ["id"], ["type" => $typeBlockId]);
-        $arrPages = $this->select("Pages", ["id", "blocks"]);
-        foreach ($arrPages as $page) {
-            $arrPageBlocksId = explode(",", $page["blocks"]);
-            foreach ($arrBlocks as $blockToDeleteId) {
-                $idx = array_search($blockToDeleteId["id"], $arrPageBlocksId);
-                if ($idx !== false) {
-                    unset($arrPageBlocksId[$idx]);
-                }
-            }
-            $this->updatePageBlocksById($page["id"], implode(",", $arrPageBlocksId));
-        }
-        foreach ($arrBlocks as $block) {
-            $this->delete("Blocks", ["id" => $block["id"]]);
-        }
-        return $this->delete("TypesOfBlocks", ["id" => $typeBlockId]);
-    }
-
-    public function deleteMetaBlockById($metaBlockId)
-    {
-        return $this->delete("MetaBlocks", ["id" => $metaBlockId]);
-    }
 
     public function deletePageById($pageId)
     {
@@ -164,8 +113,31 @@ class DBEdit extends DB
         return $this->delete("Pages", ["id" => $pageId]);
     }
 
-    public function getTypeOfBlocksById($typeBlockId) {
-        return $this->select("TypesOfBlocks", ["type"], ["id" => $typeBlockId])[0]["type"];
+
+
+    ////////////////////////////////////////////// Блоки CRUD //////////////////////////////////////////////
+    
+    /**
+     * Получение информации обо всех блоках
+     */
+    public function getAllBlockTypes()
+    {
+        return $this->select("TypesOfBlocks", ["*"]);
+    }
+    
+    public function updateContentBlockById($id, string $content)
+    {
+        return $this->update("Blocks", ["content" => $content], ["id" => $id]);
+    }
+
+    public function createNewBlock($type)
+    {
+        return $this->insert("Blocks", ["type" => $type]);
+    }
+
+    public function deleteBlockById($id)
+    {
+        return $this->delete("Blocks", ["id" => $id]);
     }
 
     public function getPageBlocksByIds(array $arrayIds) {
@@ -191,8 +163,79 @@ class DBEdit extends DB
         }
         return $arrBlocksInOrder;
     }
+    
+    ////////////////////////////////////////////// Типы блоков CRUD //////////////////////////////////////////////
 
-    public function getPagePropertyByPageId($id) {
-        return $this->select("Pages", ["*"], ["id" => $id])[0];
+    public function createTypeOfBlock(array $blockTypeProperties)
+    {
+        return $this->insert("TypesOfBlocks", $blockTypeProperties);
     }
+
+    public function updateTypeOfBlock($id, array $blockProperties)
+    {
+        return $this->update("TypesOfBlocks", $blockProperties, ["id" => $id]);
+    }
+
+    public function getTypeOfBlockPropertiesById($id)
+    {
+        return $this->select("TypesOfBlocks", ["*"], ["id" => $id])[0];
+    }
+
+    public function getTypeOfBlocksById($typeBlockId) {
+        return $this->select("TypesOfBlocks", ["type"], ["id" => $typeBlockId])[0]["type"];
+    }
+
+    public function deleteTypeOfBlockById($typeBlockId)
+    {
+        $arrBlocks = $this->select("Blocks", ["id"], ["type" => $typeBlockId]);
+        $arrPages = $this->select("Pages", ["id", "blocks"]);
+        foreach ($arrPages as $page) {
+            $arrPageBlocksId = explode(",", $page["blocks"]);
+            foreach ($arrBlocks as $blockToDeleteId) {
+                $idx = array_search($blockToDeleteId["id"], $arrPageBlocksId);
+                if ($idx !== false) {
+                    unset($arrPageBlocksId[$idx]);
+                }
+            }
+            $this->updatePageBlocksById($page["id"], implode(",", $arrPageBlocksId));
+        }
+        foreach ($arrBlocks as $block) {
+            $this->delete("Blocks", ["id" => $block["id"]]);
+        }
+        return $this->delete("TypesOfBlocks", ["id" => $typeBlockId]);
+    }
+
+    ////////////////////////////////////////////// Метаблоки CRUD //////////////////////////////////////////////
+    
+    /**
+     * Получение информации обо всех метаблоках
+     */
+    public function getAllMetaBlocks()
+    {
+        return $this->select("MetaBlocks", ["*"]);
+    }
+
+    public function createMetaBlock(array $blockTypeProperties)
+    {
+        return $this->insert("MetaBlocks", $blockTypeProperties);
+    }
+
+    public function updateMetaBlock($id, array $blockProperties)
+    {
+        return $this->update("MetaBlocks", $blockProperties, ["id" => $id]);
+    }
+
+    public function getMetaBlockPropertiesById($id)
+    {
+        return $this->select("MetaBlocks", ["*"], ["id" => $id])[0];
+    }
+
+    public function deleteMetaBlockById($metaBlockId)
+    {
+        return $this->delete("MetaBlocks", ["id" => $metaBlockId]);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 }

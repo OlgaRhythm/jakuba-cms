@@ -14,7 +14,7 @@ $table = new editView();
 
 <h1>Типы блоков</h1>
 <table>
-<?=$table->showBlocks($dbPages->getAllBlocks());?>
+<?=$table->showBlocks($dbPages->getAllBlockTypes());?>
 </table>
 
 <p>
