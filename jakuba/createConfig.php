@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Создаёт и заполняет файл config.php
+ * Создание и заполнение файла config.php
  */
 function create_config($name_db, $user_db, $password_db, $host_db) {
     $configFilePath = 'config.php';

@@ -55,6 +55,9 @@ if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/" ."config.php")) {
                 </p>
 
                 <h3>Логин и пароль для администратора</h3>
+                <p><label>Имя пользователя:<br>
+                    <input type="text" name="username" value=""/>
+                </label></p>
                 <p><label>Логин:<br>
                     <input type="text" name="login" value=""/>
                 </label></p>
@@ -89,14 +92,13 @@ function install_cms() {
         if (test_db_connection() && test_admin_credentials()) {
             // создание таблиц в базе данных
             try {
-            
                 $db = new CreatorDBTables($_POST["name_db"], $_POST["user_db"], $password_db, $host_db);
-                $db->createTables($_POST["login"], $_POST["password"]); // создание таблиц
+                $db->createTables($_POST["username"], $_POST["login"], $_POST["password"]); // создание таблиц, заданных в методе createTables
             } catch (PDOException $e) {
                 echo $e->getMessage();
                 return false;
             } 
-
+            
             // создание конфига
             create_config($_POST["name_db"], $_POST["user_db"], $password_db, $host_db); 
 

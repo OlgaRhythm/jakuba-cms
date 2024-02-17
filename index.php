@@ -1,6 +1,6 @@
 <?php
-// root
 
+// root
 if (file_exists($_SERVER['DOCUMENT_ROOT'] . "/" ."config.php")) {
     // Если конфиг создан, то загружается сайт
     require_once($_SERVER['DOCUMENT_ROOT'] . "/" ."config.php");
