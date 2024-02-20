@@ -36,7 +36,6 @@ header img {
 }
 
 menu {
-    flex: 1;
     display: block;
     height: 40px;
     line-height: 40px;
@@ -177,7 +176,7 @@ form.create_new_block button {
 }
 
 div.content {
-    /*flex: 1;*/
+    flex: 1;
     padding: 20px 10px;
     display: block;
     width: 1000px;
