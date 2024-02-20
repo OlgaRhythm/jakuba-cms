@@ -32,6 +32,36 @@ class CreatorDBTables extends DB {
         // добавить пользователя с правами администратора
         $passhash = md5($password);
         $this->insert("Users", ["name" =>  $name, "login" => $login, "password" => $passhash]);
+
+        // добавить типы блоков
+        $this->insert("TypesOfBlocks", ["id" => 1, "name" => "Обычный текст", "description" => "Обычный текст. Допустимы HTML теги.", "type" => "text", "path" => "text"]);
+        $this->insert("TypesOfBlocks", ["id" => 2, "name" => "Визуальный редактор", "description" => "Текстовый редактор с настройкой стилей.", "type" => "visual", "path" => "visual"]);
+
+        // добавить главную страницу
+        $this->insert("Pages", ["title" => "Главная страница", "url" => "/", "blocks" => "1"]);
+
+        // добавить блок-контент для главной страницы
+        $mainPageContent = "Приветствуем на главной странице сайта. Добро пожаловать. Инструкцию по использованию смотрите в README.md";
+        $this->insert("Blocks", ["id" => 1, "content" => $mainPageContent, "type" => 1]);
+
+        // добавить мета блоки
+
+        $this->insert("MetaBlocks", ["id" => 1, "content" => "", "path" => "header-img", "name" => "Картинка в шапке сайта", "description" => "Вставка картинки в шапку сайта. Изображение header.jpg загружается из папки media. В \"Содержимое мета блока\" записывается название картинки." ]);
+
+        $mainMenuContent = 
+        "<ul>
+        <li><a title=\"Главная страница\" href=\"/\">Главная</a></li>
+        <li><!--a title=\"Новая страница\" href=\"/url/\">Новая страница</a--></li>
+        </ul>";
+
+        $this->insert("MetaBlocks", ["id" => 2, "content" => $mainMenuContent, "path" => "", "name" => "Главное меню", "description" => "Главное меню в шапке сайта." ]);
+
+        $disclaimerContent = 
+        "Ссылка на github: <a href=\"https://github.com/OlgaRhythm/jakuba-cms\" target=\"_blank\">https://github.com/OlgaRhythm/jakuba-cms</a>";
+
+        $this->insert("MetaBlocks", ["id" => 3, "content" => $disclaimerContent, "path" => "", "name" => "Дисклеймер", "description" => "Предупреждение для пользователей сайта" ]);
+    
+    
     }
 
 }
